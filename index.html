@@ -1,0 +1,22 @@
+<div id="player"></div>
+<script>
+var qs = new URLSearchParams(document.location.search);
+qs.set('rel', 0);
+qs.set('showinfo', 0);
+qs.set('autoplay', true);
+
+var vid = qs.get('v');
+
+var html = `
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube-nocookie.com/embed/${vid}?${qs.toString()}"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+  ></iframe>
+`;
+
+document.querySelector('#player').innerHTML = html;
+</script>
