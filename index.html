@@ -16,15 +16,32 @@ escapeHtml.escapes = {
 
 
 var qs = new URLSearchParams(document.location.search);
-qs.set('rel', 0);
-qs.set('showinfo', 0);
-qs.set('autoplay', true);
+var defaults = {
+  rel: 0,
+  showinfo: 0,
+  autoplay: 1,
+  controls: 1,
+  autohide: 0,
+};
+
+Object.entries(defaults).forEach(([key, val])=>{
+  console.log(val, key)
+  if(!qs.has(key)){
+    qs.set(key, val);
+  }
+})
 
 var vid = qs.get('v');
 var aid = qs.get('a');
 
+if(aid) {
+  vid = aid;
+}
+
+
+
 var width = parseInt(qs.get('width') || qs.get('w') || 560, 10);
-var height = parseInt(qs.get('height') || qs.get('h') || 315, 10);
+var height = parseInt(qs.get('height') || qs.get('h') || (aid ? 45 : 315), 10);
 
 var removes = [
   'v',
