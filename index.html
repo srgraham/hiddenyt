@@ -23,8 +23,8 @@ qs.set('autoplay', true);
 var vid = qs.get('v');
 var aid = qs.get('a');
 
-var width = qs.get('width') || qs.get('w');
-var height = qs.get('height') || qs.get('h');
+var width = parseInt(qs.get('width') || qs.get('w') || 560, 10);
+var height = parseInt(qs.get('height') || qs.get('h') || 315, 10);
 
 var removes = [
   'v',
@@ -40,8 +40,8 @@ removes.forEach((attr)=>{
 
 var html = `
   <iframe
-    width="560"
-    height="315"
+    width="${width}"
+    height="${height}"
     src="https://www.youtube-nocookie.com/embed/${escapeHtml(vid)}?${escapeHtml(qs.toString())}"
     frameborder="0"
     allow="autoplay; encrypted-media"
