@@ -1,17 +1,48 @@
 <div id="player"></div>
 <script>
+
+function escapeHtml(str){
+  return str.replace(/([<>'"])/gi, function(z, c){
+    return escapeHtml.escapes[c];
+  })
+}
+escapeHtml.escapes = {
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+};
+
+
+
 var qs = new URLSearchParams(document.location.search);
 qs.set('rel', 0);
 qs.set('showinfo', 0);
 qs.set('autoplay', true);
 
 var vid = qs.get('v');
+var aid = qs.get('a');
+
+var width = qs.get('width') || qs.get('w');
+var height = qs.get('height') || qs.get('h');
+
+var removes = [
+  'v',
+  'a',
+  'width',
+  'height',
+  'w',
+  'h',
+];
+removes.forEach((attr)=>{
+  qs.delete(attr);
+});
 
 var html = `
   <iframe
     width="560"
     height="315"
-    src="https://www.youtube-nocookie.com/embed/${vid}?${qs.toString()}"
+    src="https://www.youtube-nocookie.com/embed/${escapeHtml(vid)}?${escapeHtml(qs.toString())}"
     frameborder="0"
     allow="autoplay; encrypted-media"
     allowfullscreen
